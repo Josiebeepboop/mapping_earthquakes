@@ -26,34 +26,29 @@ let baseMaps = {
 // Create the map object with a center, zoom level, and default layer.
 let map = L.map("mapid", {
   center: [
-    43.7,-79.3
+    39.5, -98.5
   ],
-  zoom: 11,
+  zoom: 3,
   layers: [streets]
 });
 
 // Pass our map layers into layers control and add the layers control to the map
 L.control.layers(baseMaps).addTo(map);
 
-// Coordinates for each point to be used in the line.
-let torontoHoods = "https://raw.githubusercontent.com/Josiebeepboop/mapping_earthquakes/main/torontoNeighborhoods.json";
-// console.log(airports);
+// // Coordinates for each point to be used in the line.
+// let torontoHoods = "https://raw.githubusercontent.com/Josiebeepboop/mapping_earthquakes/main/torontoNeighborhoods.json";
+// // console.log(airports);
 
-// Create a style for the lines
-let myStyle = {
-  color: "#3388ff",
-  fillColor: "#ffff00",
-  weight: 1
-};
+// // Create a style for the lines
+// let myStyle = {
+//   color: "#3388ff",
+//   fillColor: "#ffff00",
+//   weight: 1
+// };
 
 // Grabbing our GeoJSON data with d3
-d3.json(torontoHoods).then(function(data) {
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
   console.log(data);
   //Creating a GeoJSON layer with the retrieved data.
-  L.geoJSON(data, {
-    style: myStyle,
-    onEachFeature: function(feature,layer) {
-      layer.bindPopup("<h3> Neighborhood: " + feature.properties.AREA_NAME);
-    }
-  }).addTo(map);
+  L.geoJSON(data).addTo(map);
 });
